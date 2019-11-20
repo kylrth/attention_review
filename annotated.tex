@@ -1,7 +1,9 @@
 \documentclass[12pt]{article}
 
 \usepackage{apacite}
-\renewcommand{\APACrefauthstyle}{\bfseries}
+\usepackage{etoolbox}
+\pretocmd{\bibitem}{\bfseries}{}{}
+\pretocmd{\APACrefannotation}{\normalfont}{}{}
 
 \title{Annotated Bibliography}
 
