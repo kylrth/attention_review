@@ -69,10 +69,10 @@
 
 @inproceedings{show_observe_tell,
   author = {Hui Chen and
-            Guiguang Ding and
-            Zijia Lin and
-            Sicheng Zhao and
-            Jungong Han},
+      Guiguang Ding and
+      Zijia Lin and
+      Sicheng Zhao and
+      Jungong Han},
   title = {Show, Observe and Tell: Attribute-driven Attention Model for Image Captioning},
   booktitle = {Proceedings of the Twenty-Seventh International Joint Conference on Artificial Intelligence, {IJCAI-18}},
   publisher = {International Joint Conferences on Artificial Intelligence Organization},
@@ -86,35 +86,65 @@
 }
 
 @article{DBLP:journals/corr/ParikhT0U16,
-author = {Ankur P. Parikh and
-Oscar T{\"{a}}ckstr{\"{o}}m and
-Dipanjan Das and
-Jakob Uszkoreit},
-title = {A Decomposable Attention Model for Natural Language Inference},
-journal = {CoRR},
-volume = {abs/1606.01933},
-year = {2016},
-url = {http://arxiv.org/abs/1606.01933},
-archivePrefix = {arXiv},
-eprint = {1606.01933},
-urldate = {Nov 21, 2019},
-annotate = {Other articles referenced here use attention as a way to describe relationships between elements in a sequence. This paper extends attention to learning the relationship between elements in two sequences, in this case allowing the model to determine whether one sentence entails or contradicts the other. (Intra-sequence attention is also used to provide the model with the ``compositional relationships'' between words in the sentence.) The authors' model achieved accuracy that slightly outperformed state-of-the-art models that were much larger.}
+  author = {Ankur P. Parikh and
+      Oscar T{\"{a}}ckstr{\"{o}}m and
+      Dipanjan Das and
+      Jakob Uszkoreit},
+  title = {A Decomposable Attention Model for Natural Language Inference},
+  journal = {CoRR},
+  volume = {abs/1606.01933},
+  year = {2016},
+  url = {http://arxiv.org/abs/1606.01933},
+  archivePrefix = {arXiv},
+  eprint = {1606.01933},
+  urldate = {Nov 21, 2019},
+  annotate = {Other articles referenced here use attention as a way to describe relationships between elements in a sequence. This paper extends attention to learning the relationship between elements in two sequences, in this case allowing the model to determine whether one sentence entails or contradicts the other. (Intra-sequence attention is also used to provide the model with the ``compositional relationships'' between words in the sentence.) The authors' model achieved accuracy that slightly outperformed state-of-the-art models that were much larger. This interesting use of attention points to further uses of attention beyond what's currently considered.}
 }
 
 @article{self_attentive_embedding,
-author = {Zhouhan Lin and
-Minwei Feng and
-C{\'{\i}}cero Nogueira dos Santos and
-Mo Yu and
-Bing Xiang and
-Bowen Zhou and
-Yoshua Bengio},
-title = {A Structured Self-attentive Sentence Embedding},
-journal = {CoRR},
-volume = {abs/1703.03130},
-year = {2017},
-archivePrefix = {arXiv},
-eprint = {1703.03130},
-url = {http://arxiv.org/abs/1703.03130},
-urldate = {Nov 21, 2019}
+  author = {Zhouhan Lin and
+      Minwei Feng and
+      C{\'{\i}}cero Nogueira dos Santos and
+      Bing Xiang and
+  Bowen Zhou and
+  Yoshua Bengio},
+  title = {A Structured Self-attentive Sentence Embedding},
+  journal = {CoRR},
+  volume = {abs/1703.03130},
+  year = {2017},
+  archivePrefix = {arXiv},
+  eprint = {1703.03130},
+  url = {http://arxiv.org/abs/1703.03130},
+  urldate = {Nov 21, 2019},
+  annotate = {This work uses attention to create an embedding for sentences that reflects the semantic value of each sentence. In this case, each hidden vector in the LSTM is used as input to a self-attention mechanism, which compiles a single vector that tends to focus on a specific component of the sentence. This use of attention is distinct because it focuses on creating representations that are semantically significant without any further processing (like in translation or transcription).}
+}
+
+@article{structured_attention_net,
+  author = {Yoon Kim and
+      Carl Denton and
+      Luong Hoang and
+      Alexander M. Rush},
+  title = {Structured Attention Networks},
+  journal = {CoRR},
+  volume = {abs/1702.00887},
+  year = {2017},
+  archivePrefix = {arXiv},
+  eprint = {1702.00887},
+  url = {http://arxiv.org/abs/1702.00887},
+  urldate = {Nov 21, 2019},
+  annotate = {This paper generalizes the idea of attention beyond its application to sequences, like sentences or audio samples, to arbitrarily-structured graphs. Models like conditional random fields can be used to model structural dependencies during end-to-end training of neural networks. Allowing for tree-like structure lets attention models attend to subsequences, and this accomplishes near-state-of-the-art results on machine translation and on natural language inference. This generalization of attention mechanisms deserves further study.}
+}
+
+@article{active_memory,
+  author    = {Lukasz Kaiser and
+               Samy Bengio},
+  title     = {Can Active Memory Replace Attention?},
+  journal   = {CoRR},
+  volume    = {abs/1610.08613},
+  year      = {2016},
+  archivePrefix = {arXiv},
+  eprint    = {1610.08613},
+  url       = {http://arxiv.org/abs/1610.08613},
+  urldate = {Nov 21, 2019},
+  annotate = {Soft-decision attention functions much like memory, in that values are stored for future use and read from somewhat selectively. This paper discusses the benefits of using active memory as a replacement for attention, and finds that in nearly all cases attention performs worse than active memory. This has broad implications for the use we find in the attention mechanism, and future work with attention mechanisms will need to determine whether attention's usefulness is found simply in attention as memory.}
 }
