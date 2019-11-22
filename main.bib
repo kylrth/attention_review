@@ -1,5 +1,20 @@
 @string{ NIPS = {Advances in Neural Information Processing Systems}}
 
+@article{joint_align_translate,
+  author = {Dzmitry Bahdanau and
+      Kyunghyun Cho and
+      Yoshua Bengio},
+  title = {Neural Machine Translation by Jointly Learning to Align and Translate},
+  journal = {CoRR},
+  volume = {abs/1409.0473},
+  year = {2016},
+  archivePrefix = {arXiv},
+  eprint = {1409.0473},
+  url = {https://arxiv.org/pdf/1409.0473.pdf},
+  urldate = {Nov 21, 2019},
+  annotate = {This paper was foundational to attention mechanisms. Up to this point, RNNs for machine translation relied on an encoding vector of fixed length to represent the entire sentence. This time, the contributors allowed the decoder to rely on encoded representations of each word in the sentence, allowing it to learn the (sometimes long range) dependencies between individual words. This paper coined the phrase ``attention mechanism'', defined it as a learned mechanism (instead of a latent variable), and demonstrated that models with attention achieved higher performance on translations of long sentences. They produced the first neural machine translation model with accuracy comparable to that of statistical models.}
+}
+
 @article{attn_all_you_need,
   author = {Ashish Vaswani and
       Noam Shazeer and
@@ -18,5 +33,69 @@
   pages = {5998--6008},
   url = {https://papers.nips.cc/paper/7181-attention-is-all-you-need},
   urldate = {Nov 19, 2019},
-  annotate = {This is a test.}
+  annotate = {This work did away with the recurrent layers used with attention up until this point, simply training the attention mechanism to perform the task of text translation. Recurrent models have to be run sequentially, so removing them allows training and evaluation to run faster. They achieved state-of-the-art performance on English-to-German and English-to-French, while being able to train the models in significantly less time. In this work the researchers were careful to analyze what each component of the model contributed, allowing them to draw interesting conclusions. Another contribution is the definition of attention as a learned function of queries, keys, and values. The source of each of these inputs determines the kind of attention used.}
+}
+
+@article{listen_attend_spell,
+  author = {William Chan and
+      Navdeep Jaitly and
+      Quoc V. Le and
+      Oriol Vinyals},
+  title = {Listen, Attend, and Spell},
+  journal = {CoRR},
+  volume = {abs/1508.01211},
+  year = {2015},
+  archivePrefix = {arXiv},
+  eprint = {1508.01211},
+  url = {http://arxiv.org/abs/1508.01211},
+  urldate = {Nov 21, 2019},
+  annotate = {The same year the original attention paper was published, this group performed end-to-end speech transcription with an RNN+attention model. They used a time-dimension reducing BLSTM network to convert raw audio into a compressed representation, and then an RNN with attention to decode that representation into character sequences. This work demonstrated that attention could be used to allow for greater dependence between outputs, because without those dependencies a character-level output would not work. This paper does not contribute in terms of model architecture, but does demonstrate attention's application for character-level decoding.}
+}
+
+@article{attention_based_enc_dec,
+  author    = {KyungHyun Cho and
+      Aaron C. Courville and
+      Yoshua Bengio},
+  title     = {Describing Multimedia Content using Attention-based Encoder-Decoder Networks},
+  journal   = {CoRR},
+  volume    = {abs/1507.01053},
+  year      = {2015},
+  archivePrefix = {arXiv},
+  eprint    = {1507.01053},
+  url       = {http://arxiv.org/abs/1507.01053},
+  urldate = {Nov 21, 2019}
+}
+
+@article{DBLP:journals/corr/ParikhT0U16,
+author = {Ankur P. Parikh and
+Oscar T{\"{a}}ckstr{\"{o}}m and
+Dipanjan Das and
+Jakob Uszkoreit},
+title = {A Decomposable Attention Model for Natural Language Inference},
+journal = {CoRR},
+volume = {abs/1606.01933},
+year = {2016},
+url = {http://arxiv.org/abs/1606.01933},
+archivePrefix = {arXiv},
+eprint = {1606.01933},
+urldate = {Nov 21, 2019},
+annotate = {}
+}
+
+@article{self_attentive_embedding,
+author = {Zhouhan Lin and
+Minwei Feng and
+C{\'{\i}}cero Nogueira dos Santos and
+Mo Yu and
+Bing Xiang and
+Bowen Zhou and
+Yoshua Bengio},
+title = {A Structured Self-attentive Sentence Embedding},
+journal = {CoRR},
+volume = {abs/1703.03130},
+year = {2017},
+archivePrefix = {arXiv},
+eprint = {1703.03130},
+url = {http://arxiv.org/abs/1703.03130},
+urldate = {Nov 21, 2019}
 }
