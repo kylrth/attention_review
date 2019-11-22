@@ -53,17 +53,36 @@
 }
 
 @article{attention_based_enc_dec,
-  author    = {KyungHyun Cho and
+  author = {KyungHyun Cho and
       Aaron C. Courville and
       Yoshua Bengio},
-  title     = {Describing Multimedia Content using Attention-based Encoder-Decoder Networks},
-  journal   = {CoRR},
-  volume    = {abs/1507.01053},
-  year      = {2015},
+  title = {Describing Multimedia Content using Attention-based Encoder-Decoder Networks},
+  journal = {CoRR},
+  volume = {abs/1507.01053},
+  year = {2015},
   archivePrefix = {arXiv},
-  eprint    = {1507.01053},
-  url       = {http://arxiv.org/abs/1507.01053},
-  urldate = {Nov 21, 2019}
+  eprint = {1507.01053},
+  url = {http://arxiv.org/abs/1507.01053},
+  urldate = {Nov 21, 2019},
+  annotate = {This article offers a valuable introduction to the structure of an attention network, as used in the first paper on attention. It also reviews work on using attention for images and videos, which lends itself to tasks where object identification and location are both important, such as content descriptions. The paper provides a good understand of how convolutions and recurrent layers can both be used in networks with attention mechanisms.}
+}
+
+@inproceedings{show_observe_tell,
+  author = {Hui Chen and
+            Guiguang Ding and
+            Zijia Lin and
+            Sicheng Zhao and
+            Jungong Han},
+  title = {Show, Observe and Tell: Attribute-driven Attention Model for Image Captioning},
+  booktitle = {Proceedings of the Twenty-Seventh International Joint Conference on Artificial Intelligence, {IJCAI-18}},
+  publisher = {International Joint Conferences on Artificial Intelligence Organization},
+  pages = {606--612},
+  year = {2018},
+  month = {7},
+  doi = {10.24963/ijcai.2018/84},
+  url = {https://doi.org/10.24963/ijcai.2018/84},
+  urldate = {Nov 21, 2019},
+  annotate = {This paper implemented a CNN-RNN attention architecture for image captioning, achieving state-of-the-art performance on the task. The attention module received both region-based and attribute-based features from the image. This gave the model the ability to adaptively attend to objects in the image, taking into account the position and attributes of the objects. This paper demonstrates the versatility of the attention mechanism with regard to input feature type.}
 }
 
 @article{DBLP:journals/corr/ParikhT0U16,
@@ -79,7 +98,7 @@ url = {http://arxiv.org/abs/1606.01933},
 archivePrefix = {arXiv},
 eprint = {1606.01933},
 urldate = {Nov 21, 2019},
-annotate = {}
+annotate = {Other articles referenced here use attention as a way to describe relationships between elements in a sequence. This paper extends attention to learning the relationship between elements in two sequences, in this case allowing the model to determine whether one sentence entails or contradicts the other. (Intra-sequence attention is also used to provide the model with the ``compositional relationships'' between words in the sentence.) The authors' model achieved accuracy that slightly outperformed state-of-the-art models that were much larger.}
 }
 
 @article{self_attentive_embedding,
