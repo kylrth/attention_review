@@ -7,7 +7,7 @@
   title = {Neural Machine Translation by Jointly Learning to Align and Translate},
   journal = {CoRR},
   volume = {abs/1409.0473},
-  year = {2016},
+  year = {2015},
   archivePrefix = {arXiv},
   eprint = {1409.0473},
   url = {https://arxiv.org/pdf/1409.0473.pdf},
@@ -64,7 +64,7 @@
   eprint = {1507.01053},
   url = {http://arxiv.org/abs/1507.01053},
   urldate = {Nov 21, 2019},
-  annotate = {This article offers a valuable introduction to the structure of an attention network, as used in the first paper on attention. It also reviews work on using attention for images and videos, which lends itself to tasks where object identification and location are both important, such as content descriptions. The paper provides a good understand of how convolutions and recurrent layers can both be used in networks with attention mechanisms.}
+  annotate = {This article offers a valuable introduction to the structure of an attention network, as used in the first paper on attention. It also reviews work on using attention for images and videos, which lends itself to tasks where object identification and location are both important, such as content descriptions. The paper provides a good understanding of how convolutions and recurrent layers can both be used in networks with attention mechanisms.}
 }
 
 @inproceedings{show_observe_tell,
@@ -86,37 +86,37 @@
 }
 
 @article{DBLP:journals/corr/ParikhT0U16,
-  author = {Ankur P. Parikh and
-      Oscar T{\"{a}}ckstr{\"{o}}m and
-      Dipanjan Das and
-      Jakob Uszkoreit},
-  title = {A Decomposable Attention Model for Natural Language Inference},
-  journal = {CoRR},
-  volume = {abs/1606.01933},
-  year = {2016},
-  url = {http://arxiv.org/abs/1606.01933},
-  archivePrefix = {arXiv},
-  eprint = {1606.01933},
-  urldate = {Nov 21, 2019},
-  annotate = {Other articles referenced here use attention as a way to describe relationships between elements in a sequence. This paper extends attention to learning the relationship between elements in two sequences, in this case allowing the model to determine whether one sentence entails or contradicts the other. (Intra-sequence attention is also used to provide the model with the ``compositional relationships'' between words in the sentence.) The authors' model achieved accuracy that slightly outperformed state-of-the-art models that were much larger. This interesting use of attention points to further uses of attention beyond what's currently considered.}
+author = {Ankur P. Parikh and
+Oscar T{\"{a}}ckstr{\"{o}}m and
+Dipanjan Das and
+Jakob Uszkoreit},
+title = {A Decomposable Attention Model for Natural Language Inference},
+journal = {CoRR},
+volume = {abs/1606.01933},
+year = {2016},
+url = {http://arxiv.org/abs/1606.01933},
+archivePrefix = {arXiv},
+eprint = {1606.01933},
+urldate = {Nov 21, 2019},
+annotate = {Other articles referenced here use attention as a way to describe relationships between elements in a sequence. This paper extends attention to learning the relationship between elements in two sequences, in this case allowing the model to determine whether one sentence entails or contradicts the other. (Intra-sequence attention is also used to provide the model with the ``compositional relationships'' between words in the sentence.) The authors' model achieved accuracy that slightly outperformed state-of-the-art models that were much larger. This interesting use of attention points to further uses of attention beyond what's currently considered.}
 }
 
 @article{self_attentive_embedding,
-  author = {Zhouhan Lin and
-      Minwei Feng and
-      C{\'{\i}}cero Nogueira dos Santos and
-      Bing Xiang and
-  Bowen Zhou and
-  Yoshua Bengio},
-  title = {A Structured Self-attentive Sentence Embedding},
-  journal = {CoRR},
-  volume = {abs/1703.03130},
-  year = {2017},
-  archivePrefix = {arXiv},
-  eprint = {1703.03130},
-  url = {http://arxiv.org/abs/1703.03130},
-  urldate = {Nov 21, 2019},
-  annotate = {This work uses attention to create an embedding for sentences that reflects the semantic value of each sentence. In this case, each hidden vector in the LSTM is used as input to a self-attention mechanism, which compiles a single vector that tends to focus on a specific component of the sentence. This use of attention is distinct because it focuses on creating representations that are semantically significant without any further processing (like in translation or transcription).}
+author = {Zhouhan Lin and
+Minwei Feng and
+C{\'{\i}}cero Nogueira dos Santos and
+Bing Xiang and
+Bowen Zhou and
+Yoshua Bengio},
+title = {A Structured Self-attentive Sentence Embedding},
+journal = {CoRR},
+volume = {abs/1703.03130},
+year = {2017},
+archivePrefix = {arXiv},
+eprint = {1703.03130},
+url = {http://arxiv.org/abs/1703.03130},
+urldate = {Nov 21, 2019},
+annotate = {This work uses attention to create an embedding for sentences that reflects the semantic value of each sentence. In this case, each hidden vector in the LSTM is used as input to a self-attention mechanism, which compiles a single vector that tends to focus on a specific component of the sentence. This use of attention is distinct because it focuses on creating representations that are semantically significant without any further processing (like in translation or transcription).}
 }
 
 @article{structured_attention_net,
@@ -137,7 +137,7 @@
 
 @article{active_memory,
   author    = {Lukasz Kaiser and
-               Samy Bengio},
+      Samy Bengio},
   title     = {Can Active Memory Replace Attention?},
   journal   = {CoRR},
   volume    = {abs/1610.08613},
@@ -163,4 +163,48 @@
   url = {http://arxiv.org/abs/1502.04623},
   urldate = {Nov 21, 2019},
   annotate = {These authors combine variational autoencoders (VAEs) with recurrent networks and attention to create a model that iteratively improves a generated image from an encoded input vector. At each iteration, attention is used both to choose which part of the encoding to consider, and to choose which part of the output drawing to update. This interesting application of attention is very natural to the way humans understand image generation, and also presents promising models for image classification.}
+}
+
+@inproceedings{glimpses,
+  author = {Hugo Larochelle and
+      Geoffrey Hinton},
+  title = {Learning to Combine Foveal Glimpses with a Third-order Boltzmann Machine},
+  booktitle = {Proceedings of the 23rd International Conference on Neural Information Processing Systems - Volume 1},
+  series = {NIPS'10},
+  year = {2010},
+  location = {Vancouver, British Columbia, Canada},
+  pages = {1243--1251},
+  numpages = {9},
+  url = {http://dl.acm.org/citation.cfm?id=2997189.2997328},
+  acmid = {2997328},
+  publisher = {Curran Associates Inc.},
+  address = {USA},
+}
+
+@article{neuroscience-inspired,
+  author = {Demis Hassabis and
+      Dharshan Kumaran and
+      Christopher Summerfield and
+      Matthew Botvinick},
+  title = {Neuroscience-Inspired Artificial Intelligence},
+  journal = {Neuron},
+  volume = {95},
+  issue = {2},
+  year = {2017},
+  publisher = {Cell Press},
+  pages = {245--258},
+  url = {https://www.cell.com/neuron/fulltext/S0896-6273(17)30509-3},
+  urldate = {Dec 4, 2019}
+}
+
+@article{neural_turing,
+  title={Neural Turing Machines},
+  author={Alex Graves and Greg Wayne and Ivo Danihelka},
+  journal={CoRR},
+  year={2014},
+  volume={abs/1410.5401},
+  archivePrefix = {arXiv},
+  eprint = {1410.5401},
+  url = {http://arxiv.org/abs/1410.5401},
+  urldate = {Dec 4, 2019},
 }
