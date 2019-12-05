@@ -15,6 +15,7 @@
 \usepackage{amsmath}
 \usepackage{booktabs}
 \usepackage{tocloft}
+\usepackage{url}
 \urlstyle{same}
 
 % dot leaders for section entries in table of contents
@@ -46,7 +47,7 @@ This is a wonderful abstract.
 
 The attention mechanism is an exciting development in the artificial intelligence community. The concept is simple, and rooted in our understanding of attention in biological intelligence \cite{glimpses,neuroscience-inspired}. Attention mechanisms also lend themselves to more intuitive interpretation, an attractive feature as concerns about model interpretability gain traction.
 
-Ironically, great attention has been given to attention mechanisms since their conception in \citeyear{joint_align_translate}. Initially formulated as a word alignment mechanism for text translation \cite{joint_align_translate},
+Ironically, attention mechanisms have received lots of attention since their conception in \citeyear{joint_align_translate}. Initially formulated as a word alignment mechanism for text translation \cite{joint_align_translate}, the concept was expanded
 
 \section{Theoretical generalization}
 
@@ -65,6 +66,41 @@ Neural memory resources aren't the same thing \cite{neural_turing}?
 \section{Application}
 
 \section{Interpretation}
+
+\section{Conclusion}
+
+\appendix
+\section{An overview of neural machine learning}
+
+Machine learning is a branch of artificial intelligence that deals with training a model to perform tasks by providing the model with data. There are various types of machine learning algorithms, applicable to different tasks. One of the most popular algorithms is the neural network. A neural network is a system of connections between simple functions (e.g. multiplication, summation, ReLU \cite{relu}), which together approximate a larger, more complex function. It has been proven that sufficiently large neural networks can approximate arbitrary continuous functions \cite{universal_approximators}. Theoretically, this means that for every reasonable mapping there exists a neural network that replicates it. Some examples are listed in Table~\ref{table:mappings}.
+
+\begin{table}
+    \centering
+    \begin{tabular}{|c|c|}
+        \hline
+        \textbf{Input} & \textbf{Output} \\
+        \hline
+        images & the objects the image contains \\
+        audio recordings & a text transcription \\
+        English text & a French translation \\
+        \hline
+    \end{tabular}
+    \caption{The caption of the table}\label{table:mappings}
+\end{table}
+
+Most commonly, neural networks are trained in a supervised way, meaning that they are shown the correct output for each training example. Neural networks generally use backpropagation and gradient descent to train weights that are present in the simple functions of the network. Backpropagation uses the difference between the correct example and the network's output to determine how the weights in the network need to change. Figure~\ref{figure:backpropagation} provides a visualization of backpropagation.
+
+While the theoretical limitations of neural networks are quite permissive, in practice it is difficult to train them. Backpropagation is sensitive to ``noisy'' or incorrect data, meaning that data selection is at least as important as architecture selection. The training process is also relatively expensive in terms of computation time and memory usage; neural networks are commonly trained for days or even months \cite{attn_all_you_need}.
+
+Another real issue is that backpropagation is unlikely to find the ``global optimum'', the absolutely optimal set of weights that approximate the function. This is due to the fact that the algorithm only adjusts the weights incrementally, and can get stuck in a ``local optimum'', a condition where no slight change would improve performance but performance is still not as good as at the global optimum.
+
+These difficulties with training neural networks are the reason that so much effort is given to developing better network architectures. Certain architectures and data representations lend themselves to a smoother search space for the weights, increasing the likelihood that backpropagation reaches a better optimum.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=3in]{figures/backpropagation.png}
+    \caption{A visualization showing that backpropagation uses the difference between the desired and actual output to train the weights of the neural network. Image source~\protect\cite{backprop}.}\label{figure:backpropagation}
+\end{figure}
 
 \bibliographystyle{named}
 \bibliography{main}
