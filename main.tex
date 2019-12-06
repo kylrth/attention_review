@@ -47,7 +47,7 @@ This is a wonderful abstract.
 
 \section{Introduction}
 
-The attention mechanism is an exciting development in the artificial intelligence community. The concept is simple, and rooted in our understanding of attention in biological intelligence \cite{glimpses,neuroscience-inspired}. Attention mechanisms also lend themselves to more intuitive interpretation, an attractive feature as concerns about model interpretability gain traction. In this review, we observe the trajectory that current research is taking with regard to the theory and application of attention, and suggest where future work with attention may yield fruits. [STRENGTHEN THIS THESIS]
+The attention mechanism is an exciting development in the artificial intelligence community. The concept is simple, and rooted in our understanding of attention in biological intelligence \cite{glimpses,neuroscience-inspired}. Attention mechanisms also lend themselves to more intuitive interpretation, an attractive feature as concerns about model interpretability gain traction. In this review, we observe the trajectory that current research is taking with regard to the theory and application of attention, and suggest how future work should try to understand why attention is so useful for such varied applications.
 
 \subsection{Background on neural machine learning}
 
@@ -99,44 +99,69 @@ The key development here was the use of a soft alignment, meaning that each pair
 
 \section{Theoretical generalization}
 
-Ironically, attention mechanisms have received lots of attention since their conception in \citeyear{joint_align_translate}. Initially formulated as a word alignment mechanism for text translation \cite{joint_align_translate}, the concept was expanded [BY WHOM? SEE WHO CITES THESE GUYS]
+Ironically, attention mechanisms have received lots of attention since their conception in \citeyear{joint_align_translate}. Initially formulated as a word alignment mechanism for text translation \cite{joint_align_translate}, attention can be generalized in two ways: first, as a mechanism that learns the relationship between variables, and second as a mapping from queries to outputs given a set of key-value pairs.
 
-\cite{listen_attend_spell}
+% \cite{listen_attend_spell}
 
-Unsure: \cite{show_observe_tell}, \cite{draw}
-
-\subsection{Self-attention}
-
-\cite{self_attentive_embedding}
-
-\subsection{Attention between existing pairs}
-
-\cite{natural_language_inference}
-
-\subsection{Attention on arbitrary graphs}
-
-\cite{graphs}
-
-\subsection{Attention as a lookup}
+% Unsure: \cite{show_observe_tell}, \cite{draw}
 
 \subsection{Active memory}
 
-\cite{active_memory}
+One of the first applications of attention was in creating a completely differentiable neural Turing machine \cite{neural_turing}. The model was given memory to read and write from at each input, and an attention mechanism allowed those operations to be differentiable. Just as vanilla neural networks have been shown to approximate arbitrary functions, the neural Turing machine can approximate arbitrary programs.
 
-Neural memory resources aren't the same thing \cite{neural_turing}?
+One of the shortcomings of the neural Turing machine is that the attention mechanism is biased toward attending to one value more than any other \cite{active_memory}. Thus it is difficult to train the network to perform tasks requiring the model to read from multiple entries in memory, like adding two numbers. Kaiser and Bengio [\citeyear{active_memory}] suggested that attention suffers exactly from this, and offer a mechanism called active memory that attends to all inputs equally. They called their model the extended neural GPU, and achieved promising results with better performance on translating longer sentences.
+
+This appeared to be a promising generalization of attention, but the performance of the extended neural GPU was outstripped by later attention models that solved the single-focus problem using multi-headed attention \cite{attn_all_you_need} (see section~\ref{section:multi_headed}).
+
+\subsection{Attention as relationships}
+
+There is a wide range of relationships that attention mechanisms can model. Specifically, we will see that attention has been generalized to include relationships between two input sequences, relationships within a single sequence, and relationships between arbitrary graphs. This generalization leads us to a view of attention beyond the scope of the word ``attention'' itself.
+
+\subsubsection{Inter-sequence attention}
+
+Instead of applying attention to elements of an input sequence to predict an output sequence, Parikh \etal~[\citeyear{natural_language_inference}] successfully used an attention mechanism to produce relationships between elements of two input sequences. They successfully used this mechanism to perform natural language inference\footnote{Natural language inference is the task of determining whether the meaning of a sentence entails (implies) or contradicts the meaning of another.}. Figure~\ref{figure:inference} makes it obvious that the attention function $F$ is determining the strength of the relationship between its two input words; that strength is used by the model to determine the entailment relationship of the pair of sentences.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=3in]{figures/inference.png}
+    \caption{The model used by \protect\cite{natural_language_inference}. $F$ is the attention model used to ``decompose the problem into the comparison of aligned subphrases''. $G$ compares the aligned subphrases. Both $F$ and $G$ were feed-forward networks in the work.}\label{figure:inference}
+\end{figure}
+
+\subsubsection{Self-attention}
+
+Parikh \etal~[\citeyear{natural_language_inference}] also suggest using what they term ``intra-sentence attention'' to represent relationships between words within each input sentence. This is more broadly referred to as self-attention \cite{self_attentive_embedding,attn_all_you_need}. As the name suggests, self-attentive mechanisms learn the relationship between elements of a single sequence. While RNNs are theoretically able to do this, they struggle with long-distance relationships because they encode all relationships into a single context vector \cite{joint_align_translate}. Self-attention overcomes this difficulty.
+
+\subsubsection{Attention on arbitrary graphs}
+
+Attention can also be used on more complex structures than sequences. Kim \etal~[\citeyear{graphs}] show that attention can be generalized to represent relationships between elements of arbitrary graphs\footnote{A \textit{graph} in this context refers to a set of elements with connections drawn between them. A sequence is a graph with elements connected one after the other.}. This allows the model to accept parse trees and other useful structures that explicitly encode relationships in the data.
+
+This use of attention is relevant because it blurs the line between data and relationships. In this case, some known relationships were provided to the model. When the model was provided with tree structure representations of sentences, Kim \etal~[\citeyear{graphs}] observed that the model learned to attend to entire subtrees as well as individual words. Thus the structure introduced in the input served as a way for the attention mechanism to
+
+\subsection{Attention as a lookup mapping}
+
+Several papers describe attention as a map from queries to context vectors, with exposure to keys and values that represent the input sequence \cite{attn_all_you_need,attention_please}. This model of attention makes no assumption about the type of input to the queries, keys, or values. The keys and queries are combined to create the attention vector, which is applied to the values to produce the context vector, the output of the attention mechanism. The keys and values can be seen as different representations of the same input \cite{attention_please}, while the queries correspond to the current position of interest.
+
+This model is so generic that little can be determined about how attention benefits models in practice. More experimentation will help us understand whether the varied manifestations of attention provide a common benefit, or if they are better considered separately.
 
 \section{Application}
+
+Here we review several recent applications of attention, hoping to observe common strengths and deficiencies. We also discuss directions that future work may take, given the strength that attention has shown in producing relationship metrics.
 
 \subsection{Attention without recurrent layers}
 
 \cite{attn_all_you_need}
 
-\section{Interpretation}
+\subsection{Multi-headed attention}\label{section:multi_headed}
 
-Can you use attention to do feature importance?
+\cite{attn_all_you_need}
+
+\subsection{Model interpretation}
+
+Given that attention mechanisms learn relationships between sequences, we wonder if a simpler mechanism could learn the relationship from many inputs to a single output. One of the drawbacks of neural networks is that they don't provide a way to create feature importance metrics. These metrics are useful for determining why a model makes the decisions it does. In many papers cited here, attention produces a relationship matrix that provides intuition about the model's reasoning. It's possible that that same matrix could be produced by a simpler attention mechanism focused on the features that contribute to a single output value.
 
 \section{Conclusion}
 
+Currently, what is known for certain is that attention is useful. What is not known is exactly what it provides to the model. Is it simply a good way to generate a context vector, or does it successfully encode all the information needed to produce the output? Is it simply a limited version of something more powerful?
 
 \bibliographystyle{named}
 \bibliography{main}
