@@ -66,10 +66,10 @@ Machine learning is a branch of artificial intelligence that deals with training
         English text & a French translation \\
         \hline
     \end{tabular}
-    \caption{The caption of the table}\label{table:mappings}
+    \caption{Mappings that a neural network can theoretically learn. Mappings must be consistent; that is, each input should only have one corresponding output.}\label{table:mappings}
 \end{table}
 
-Most commonly, neural networks undergo supervised training, meaning that they are shown the correct output for each training example and made to improve in some way. Neural networks generally use backpropagation and gradient descent to train weights that are present in the simple functions of the network. Backpropagation uses the difference between the correct example and the network's output to determine how the weights in the network need to change. Figure~\ref{figure:backpropagation} provides a visualization of backpropagation in a neural network.
+Most commonly, neural networks undergo supervised training, meaning that they are shown the correct output for each training example and made to improve in some way. Neural networks generally use backpropagation\footnote{\textit{Backpropagation} refers to the calculation of the gradient for each trainable weight in the network. See \cite{backprop_theory} for details on backpropagation.} and gradient descent\footnote{\textit{Gradient descent} is a method of training wherein the weights are updated in the direction opposite the gradient at each training step \cite{gradient_descent}.} to train weights that are present in the simple functions of the network. Backpropagation uses the difference between the correct example and the network's output to determine how the weights in the network need to change. Figure~\ref{figure:backpropagation} provides a visualization of backpropagation in a neural network.
 
 \begin{figure}
     \centering
@@ -77,7 +77,7 @@ Most commonly, neural networks undergo supervised training, meaning that they ar
     \caption{A visualization showing that backpropagation uses the difference between the desired and actual output to train the weights of the neural network. Image source~\protect\cite{backprop}.}\label{figure:backpropagation}
 \end{figure}
 
-While the theoretical limitations of neural networks are quite permissive, it is relatively difficult to train them. Backpropagation is sensitive to ``noisy'' or incorrect data, meaning that data selection is at least as important as architecture selection. The training process is also relatively expensive in terms of computation time and memory usage; neural networks are commonly trained for days or even months \cite{attn_all_you_need}.
+While the theoretical limitations of neural networks are quite permissive, it is relatively difficult to train them. Backpropagation is sensitive to ``noisy'' or incorrect data, meaning that data cleaning and preparation is at least as important as architecture selection. The training process is also relatively expensive in terms of computation time and memory usage; neural networks are commonly trained for days or even months \cite{attn_all_you_need}.
 
 Another real issue is that backpropagation is unlikely to find the ``global optimum'', the absolutely optimal set of weights that approximate the function. This is due to the fact that the algorithm only adjusts the weights incrementally, and can get stuck in a ``local optimum'', a condition where no slight change would improve performance but performance is still not as good as at the global optimum.
 
@@ -89,7 +89,7 @@ Attention appears to provide that smoother search space for training the network
 
 Bahdanau \etal~[\citeyear{joint_align_translate}] first described attention as an ``alignment model'' for words in a sentence to be translated. They used an RNN encoder-decoder model as others had before \cite{encoder_decoders}, but for every position in the target sentence, the alignment model produced a ``soft alignment''\footnote{In machine translation, alignment refers to the pairing of words or phrases in the source sentence with words or phrases in the target sentence.} between the target location and every word in the source sentence. See Figure~\ref{figure:rnn_search} for more details on the model.
 
-The key development here was the use of a soft alignment, meaning that each pair of source and target words was given an alignment score between 0 and 1. This made the alignment calculation differentiable, allowing the alignment to be performed by a feed-forward neural network trained along with the rest of the model.
+The key development here was the use of a soft alignment, meaning that each pair of source and target words was given an alignment score between 0 and 1. This made the alignment calculation differentiable, allowing the alignment to be performed by a feed-forward\footnote{``Feed-forward'' refers to the fact that all layers of the network produce output in the forward direction (as opposed to an RNN for example). An example representation can be seen in Figure~\ref{figure:backpropagation}.} neural network trained along with the rest of the model.
 
 \begin{figure}
     \centering
