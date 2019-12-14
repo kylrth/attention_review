@@ -49,7 +49,7 @@ This is a wonderful abstract.
 
 The attention mechanism is an exciting development in the artificial intelligence community. The concept is simple, and rooted in our understanding of attention in biological intelligence \cite{glimpses,neuroscience-inspired}. Attention mechanisms also lend themselves to more intuitive interpretation, an attractive feature as concerns about model interpretability gain traction. In this review, we observe the trajectory that current research is taking with regard to the theory and application of attention, and suggest how future work should try to understand why attention is so useful for such varied applications.
 
-\subsection{Background on neural machine learning}
+\subsection{Background on neural machine learning}\label{section:background}
 
 Machine learning is a branch of artificial intelligence that deals with training a model to perform tasks by providing the model with data. There are various types of machine learning algorithms, applicable to different tasks. One of the most popular algorithms is the neural network. A neural network is a system of connections between simple functions (e.g. multiplication, summation, ReLU \cite{relu}), which together approximate a larger, more complex function. It has been proven that sufficiently large neural networks can approximate arbitrary continuous functions \cite{universal_approximators}. Theoretically, this means that for every reasonable mapping there exists a neural network that replicates it. Some example mappings are listed in Table~\ref{table:mappings}.
 
@@ -87,9 +87,9 @@ These difficulties with training neural networks are the reason that so much eff
 
 Attention appears to provide that smoother search space for training the network because its output can explicitly depend on each input given to the network, while also giving an intuitive view of the inputs that the network learns to ``attend'' to.
 
-Bahdanau \etal~[\citeyear{joint_align_translate}] first described attention as an ``alignment model'' for words in a sentence to be translated. They used an RNN encoder-decoder model as others had before \cite{encoder_decoders}, but for every position in the target sentence, the alignment model produced a ``soft alignment''\footnote{In machine translation, alignment refers to the pairing of words or phrases in the source sentence with words or phrases in the target sentence.} between the target location and every word in the source sentence. See Figure~\ref{figure:rnn_search} for more details on the model.
+Bahdanau \etal~[\citeyear{joint_align_translate}] first described attention as an ``alignment model'' for words in a sentence to be translated. They used an RNN encoder-decoder model as others had before \cite{encoder_decoders}, but for every position in the target sentence, the alignment model produced a ``soft alignment''\footnote{In machine translation, \textit{alignment} refers to the pairing of words or phrases in the source sentence with words or phrases in the target sentence.} between the target location and every word in the source sentence. See Figure~\ref{figure:rnn_search} for more details on the model.
 
-The key development here was the use of a soft alignment, meaning that each pair of source and target words was given an alignment score between 0 and 1. This made the alignment calculation differentiable, allowing the alignment to be performed by a feed-forward\footnote{``Feed-forward'' refers to the fact that all layers of the network produce output in the forward direction (as opposed to an RNN for example). An example representation can be seen in Figure~\ref{figure:backpropagation}.} neural network trained along with the rest of the model.
+The key development here was the use of a soft alignment, meaning that each pair of source and target words was given an alignment score between 0 and 1. This made the alignment calculation differentiable\footnote{\textit{differentiable} means that the function has a derivative, allowing gradients to pass through with backpropagation.}, allowing the alignment to be performed by a feed-forward\footnote{\textit{Feed-forward} refers to the fact that all layers of the network produce output in the forward direction (as opposed to an RNN, for example, in which some output from a network is used as input to the same layer). An example representation can be seen in Figure~\ref{figure:backpropagation}.} neural network trained along with the rest of the model.
 
 \begin{figure}
     \centering
@@ -99,27 +99,21 @@ The key development here was the use of a soft alignment, meaning that each pair
 
 \section{Theoretical generalization}
 
-Ironically, attention mechanisms have received lots of attention since their conception in \citeyear{joint_align_translate}. Initially formulated as a word alignment mechanism for text translation \cite{joint_align_translate}, attention can be generalized in two ways: first, as a mechanism that learns the relationship between variables, and second as a mapping from queries to outputs given a set of key-value pairs.
+Ironically, attention mechanisms have received lots of attention since their conception in \citeyear{joint_align_translate}. Initially formulated as a word alignment mechanism for text translation \cite{joint_align_translate}, attention can be generalized in two ways: first in terms of the objects it operates on, and second in terms of the information it provides.
+
+[GARBAGE]: first as a mechanism that learns the relationship between variables, and second as a mapping from queries to outputs given a set of key-value pairs.
 
 % \cite{listen_attend_spell}
 
 % Unsure: \cite{show_observe_tell}, \cite{draw}
 
-\subsection{Active memory}
+\subsection{Objects of attention}
 
-One of the first applications of attention was in creating a completely differentiable neural Turing machine \cite{neural_turing}. The model was given memory to read and write from at each input, and an attention mechanism allowed those operations to be differentiable. Just as vanilla neural networks have been shown to approximate arbitrary functions, the neural Turing machine can approximate arbitrary programs.
-
-One of the shortcomings of the neural Turing machine is that the attention mechanism is biased toward attending to one value more than any other \cite{active_memory}. Thus it is difficult to train the network to perform tasks requiring the model to read from multiple entries in memory, like adding two numbers. Kaiser and Bengio [\citeyear{active_memory}] suggested that attention suffers exactly from this, and offer a mechanism called active memory that attends to all inputs equally. They called their model the extended neural GPU, and achieved promising results with better performance on translating longer sentences.
-
-This appeared to be a promising generalization of attention, but the performance of the extended neural GPU was outstripped by later attention models that solved the single-focus problem using multi-headed attention \cite{attn_all_you_need} (see section~\ref{section:multi_headed}).
-
-\subsection{Attention as relationships}
-
-There is a wide range of relationships that attention mechanisms can model. Specifically, we will see that attention has been generalized to include relationships between two input sequences, relationships within a single sequence, and relationships between arbitrary graphs. This generalization leads us to a view of attention beyond the scope of the word ``attention'' itself.
+There is a wide range of relationships that attention mechanisms can model. Specifically, we will see that attention has been generalized to include relationships between two input sequences, relationships within a single sequence, and relationships between arbitrary graphs. This generalization leads us to view attention beyond the scope of what the word ``attention'' implies.
 
 \subsubsection{Inter-sequence attention}
 
-Instead of applying attention to elements of an input sequence to predict an output sequence, Parikh \etal~[\citeyear{natural_language_inference}] successfully used an attention mechanism to produce relationships between elements of two input sequences. They successfully used this mechanism to perform natural language inference\footnote{Natural language inference is the task of determining whether the meaning of a sentence entails (implies) or contradicts the meaning of another.}. Figure~\ref{figure:inference} makes it obvious that the attention function $F$ is determining the strength of the relationship between its two input words; that strength is used by the model to determine the entailment relationship of the pair of sentences.
+Instead of applying attention to elements of an input sequence to predict an output sequence, Parikh \etal~[\citeyear{natural_language_inference}] successfully used an attention mechanism to produce relationships between elements of two input sequences. They successfully used this mechanism to perform natural language inference\footnote{\textit{Natural language inference} is the task of determining whether the meaning of a sentence entails (implies) or contradicts the meaning of another.}. Figure~\ref{figure:inference} makes it obvious that the attention function $F$ is determining the strength of the relationship between its two input words; that strength is used by the model to determine the entailment relationship of the pair of sentences.
 
 \begin{figure}
     \centering
@@ -129,13 +123,27 @@ Instead of applying attention to elements of an input sequence to predict an out
 
 \subsubsection{Self-attention}
 
-Parikh \etal~[\citeyear{natural_language_inference}] also suggest using what they term ``intra-sentence attention'' to represent relationships between words within each input sentence. This is more broadly referred to as self-attention \cite{self_attentive_embedding,attn_all_you_need}. As the name suggests, self-attentive mechanisms learn the relationship between elements of a single sequence. While RNNs are theoretically able to do this, they struggle with long-distance relationships because they encode all relationships into a single context vector \cite{joint_align_translate}. Self-attention overcomes this difficulty.
+Parikh \etal~[\citeyear{natural_language_inference}] also suggest what they term ``intra-sentence attention'' to represent relationships between words within the same input sentence. This is more broadly referred to as self-attention \cite{self_attentive_embedding,attn_all_you_need}. As the name suggests, self-attentive mechanisms learn the relationship between elements of a single sequence. While RNNs are theoretically able to do this, they struggle with long-distance relationships because they encode all relationships into a single context vector \cite{joint_align_translate}. Self-attention overcomes this difficulty, and provided for additional accuracy in the NLI model developed by Parikh \etal~[\citeyear{natural_language_inference}].
 
 \subsubsection{Attention on arbitrary graphs}
 
-Attention can also be used on more complex structures than sequences. Kim \etal~[\citeyear{graphs}] show that attention can be generalized to represent relationships between elements of arbitrary graphs\footnote{A \textit{graph} in this context refers to a set of elements with connections drawn between them. A sequence is a graph with elements connected one after the other.}. This allows the model to accept parse trees and other useful structures that explicitly encode relationships in the data.
+Attention can also be used on more complex structures than sequences. Kim \etal~[\citeyear{graphs}] show that attention can be generalized to represent relationships between elements of arbitrary graphs\footnote{A \textit{graph} in this context refers to a set of elements with connections drawn between them. A sequence is a graph with elements connected one after the other, but in general a graph's elements can be connected to each other arbitrarily.}. This allows the model to accept parse trees and other useful structures that explicitly encode relationships in the data.
 
-This use of attention is relevant because it blurs the line between data and relationships. In this case, some known relationships were provided to the model. When the model was provided with tree structure representations of sentences, Kim \etal~[\citeyear{graphs}] observed that the model learned to attend to entire subtrees as well as individual words. Thus the structure introduced in the input served as a way for the attention mechanism to
+This use of attention is relevant because it blurs the line between data and relationships. In the case of Kim \etal~[\citeyear{graphs}], some known relationships were provided to the model in the form of parse tree structures. When the model was provided with this structure, the model learned to attend to entire subtrees as well as individual words. Thus the structure introduced in the data served as a way for the model to recognize and learn from information in the structural bias. Thus it was shown that attention mechanisms can learn from the inherent structure of their input.
+
+More work should be given to understanding how attention learns from the structure of the objects it operates on. If attention can learn from the structure as well as the values of its input, any current application of attention could benefit from preprocessing the data to expose structural information. We've already seen this applied to natural language tasks \cite{graphs}, but structure could be extracted from images, videos, and longer-form text input like paragraphs or web pages.
+
+\subsection{Information provided by attention}
+
+Discovering the hidden biases\footnote{A \textit{bias} refers to the tendency of a network structure to exhibit a certain behavior, regardless of the weights the network. Understanding the biases of a network structure allows us to understand how it learns, and helps us predict strengths and weaknesses. See the last paragraph of Section~\ref{section:background} for a discussion of this aspect of neural network research.} of neural network models is an area of ongoing research in neural machine learning. Fortunately, much effort has been given to discovering the biases of attention models. Some limitations of attention have already been discovered, but others have only been hinted and and deserve further work.
+
+\subsection{Active memory}
+
+One of the first applications of attention was to create a completely differentiable neural Turing machine\footnote{In computing theory, a \textit{Turing machine} is any computer that can execute an arbitrary algorithm \cite{wiki:turing}.} \cite{neural_turing}. The model was given memory to read from and write to at each iteration, and an attention mechanism allowed those operations to be differentiable. Just as vanilla neural networks have been shown to approximate arbitrary functions, the neural Turing machine can approximate arbitrary programs.
+
+One of the shortcomings of the neural Turing machine is that the attention mechanism is biased toward attending to one value more than any other \cite{active_memory}. Thus it is difficult to train the network to perform tasks requiring the model to read from multiple entries in memory, like adding two numbers. Kaiser and Bengio [\citeyear{active_memory}] suggested that attention suffers from exactly this issue, and offer a mechanism called active memory that attends to all inputs equally. They called their model the extended neural GPU, and it achieved promising results with better performance at translating long sentences. This could be due to the fact that longer sentences are more likely to contain alignments that aren't one-to-one.
+
+This appeared to be a promising generalization of attention, but the performance of the extended neural GPU was outstripped by later attention models that solved the single-focus problem using multi-headed attention \cite{attn_all_you_need} (see section~\ref{section:multi_headed}).
 
 \subsection{Attention as a lookup mapping}
 
