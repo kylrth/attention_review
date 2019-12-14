@@ -145,7 +145,13 @@ This appeared to be a promising generalization of attention, but the performance
 
 \subsubsection{Attention as a lookup mapping}
 
-Several papers describe attention as a map from a sequence of keys to a sequence of context vectors, with exposure to queries and values as well \cite{attn_all_you_need,attention_please}. This model of attention makes no assumption about the type of input to the queries, keys, or values. The keys and queries are combined to create the attention vector, which is applied to the values to produce the context vector, the output of the attention mechanism. The keys and values can be seen as different representations of the same input \cite{attention_please}, while the queries correspond to the current position of interest.
+\begin{figure}
+    \centering
+    \includegraphics[width=3in]{figures/queries_keys_values.png}
+\caption{The generalized model of attention from \protect\cite{attention_please}. Here $kaf$ and $vaf$ are functions mapping the input sequence to keys and values, respectively. An important distinction should be made between the terms ``attention weights'' and ``context vector'': attention weights are the ``soft alignment'' between the query and elements of the input sequence, and the context vector is the compiled information resulting from the weighted average of the values with respect to the attention weights. Image source~\protect\cite{attention_please}.}\label{figure:queries_keys_values}
+\end{figure}
+
+Several papers describe attention as a map from a sequence of keys to a sequence of context vectors, with exposure to queries and values as well \cite{attn_all_you_need,attention_please}. This model of attention makes no assumption about the type of input to the queries, keys, or values. The keys and queries are combined to create the attention vector, which is applied to the values to produce the context vector, the output of the attention mechanism. The keys and values can be seen as different representations of the same input \cite{attention_please}, while the queries correspond to the current position of interest. See Figure~\ref{figure:queries_keys_values} for more details on this model of attention.
 
 This model of attention generalizes the mechanism to include nearly all forms of attention found in literature. The greatest difference between this model and the original one from Bahdanau \etal~[\citeyear{joint_align_translate}] is the distinction between keys and values. Bahdanau's model uses the same representation $h$ for both keys and values. More experimentation will help us understand whether the varied manifestations of attention provide a common benefit, or if they are better considered separately.
 
