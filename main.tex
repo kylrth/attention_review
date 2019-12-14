@@ -101,8 +101,6 @@ The key development here was the use of a soft alignment, meaning that each pair
 
 Ironically, attention mechanisms have received lots of attention since their conception in \citeyear{joint_align_translate}. Initially formulated as a word alignment mechanism for text translation \cite{joint_align_translate}, attention can be generalized in two ways: first in terms of the objects it operates on, and second in terms of the information it provides.
 
-[GARBAGE]: first as a mechanism that learns the relationship between variables, and second as a mapping from queries to outputs given a set of key-value pairs.
-
 % \cite{listen_attend_spell}
 
 % Unsure: \cite{show_observe_tell}, \cite{draw}
@@ -137,19 +135,19 @@ More work should be given to understanding how attention learns from the structu
 
 Discovering the hidden biases\footnote{A \textit{bias} refers to the tendency of a network structure to exhibit a certain behavior, regardless of the weights the network. Understanding the biases of a network structure allows us to understand how it learns, and helps us predict strengths and weaknesses. See the last paragraph of Section~\ref{section:background} for a discussion of this aspect of neural network research.} of neural network models is an area of ongoing research in neural machine learning. Fortunately, much effort has been given to discovering the biases of attention models. Some limitations of attention have already been discovered, but others have only been hinted and and deserve further work.
 
-\subsection{Active memory}
+\subsubsection{Active memory}
 
 One of the first applications of attention was to create a completely differentiable neural Turing machine\footnote{In computing theory, a \textit{Turing machine} is any computer that can execute an arbitrary algorithm \cite{wiki:turing}.} \cite{neural_turing}. The model was given memory to read from and write to at each iteration, and an attention mechanism allowed those operations to be differentiable. Just as vanilla neural networks have been shown to approximate arbitrary functions, the neural Turing machine can approximate arbitrary programs.
 
-One of the shortcomings of the neural Turing machine is that the attention mechanism is biased toward attending to one value more than any other \cite{active_memory}. Thus it is difficult to train the network to perform tasks requiring the model to read from multiple entries in memory, like adding two numbers. Kaiser and Bengio [\citeyear{active_memory}] suggested that attention suffers from exactly this issue, and offer a mechanism called active memory that attends to all inputs equally. They called their model the extended neural GPU, and it achieved promising results with better performance at translating long sentences. This could be due to the fact that longer sentences are more likely to contain alignments that aren't one-to-one.
+One of the shortcomings of the neural Turing machine is that the attention mechanism is biased toward attending to one value more than any other \cite{active_memory}. Thus it is difficult to train the network to perform tasks requiring the model to read from multiple entries in memory, like adding two numbers. Kaiser and Bengio [\citeyear{active_memory}] suggested that attention suffers from exactly this issue, and offer a mechanism called active memory that attends to all inputs equally. They called their model the extended neural GPU, and it achieved promising results with better performance at translating long sentences. This could be due to the fact that long sentences are more likely to contain alignments that aren't one-to-one.
 
 This appeared to be a promising generalization of attention, but the performance of the extended neural GPU was outstripped by later attention models that solved the single-focus problem using multi-headed attention \cite{attn_all_you_need} (see section~\ref{section:multi_headed}).
 
-\subsection{Attention as a lookup mapping}
+\subsubsection{Attention as a lookup mapping}
 
-Several papers describe attention as a map from queries to context vectors, with exposure to keys and values that represent the input sequence \cite{attn_all_you_need,attention_please}. This model of attention makes no assumption about the type of input to the queries, keys, or values. The keys and queries are combined to create the attention vector, which is applied to the values to produce the context vector, the output of the attention mechanism. The keys and values can be seen as different representations of the same input \cite{attention_please}, while the queries correspond to the current position of interest.
+Several papers describe attention as a map from a sequence of keys to a sequence of context vectors, with exposure to queries and values as well \cite{attn_all_you_need,attention_please}. This model of attention makes no assumption about the type of input to the queries, keys, or values. The keys and queries are combined to create the attention vector, which is applied to the values to produce the context vector, the output of the attention mechanism. The keys and values can be seen as different representations of the same input \cite{attention_please}, while the queries correspond to the current position of interest.
 
-This model is so generic that little can be determined about how attention benefits models in practice. More experimentation will help us understand whether the varied manifestations of attention provide a common benefit, or if they are better considered separately.
+This model of attention generalizes the mechanism to include nearly all forms of attention found in literature. The greatest difference between this model and the original one from Bahdanau \etal~[\citeyear{joint_align_translate}] is the distinction between keys and values. Bahdanau's model uses the same representation $h$ for both keys and values. More experimentation will help us understand whether the varied manifestations of attention provide a common benefit, or if they are better considered separately.
 
 \section{Application}
 
