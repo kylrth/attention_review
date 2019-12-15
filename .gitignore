@@ -8,3 +8,5 @@ __latexindent_temp.tex
 *.out
 *.synctex.gz
 *.toc
+main-blx.bib
+*.run.xml

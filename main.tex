@@ -151,15 +151,35 @@ This appeared to be a promising generalization of attention, but the performance
 \caption{The generalized model of attention from \protect\cite{attention_please}. Here $kaf$ and $vaf$ are functions mapping the input sequence to keys and values, respectively. An important distinction should be made between the terms ``attention weights'' and ``context vector'': attention weights are the ``soft alignment'' between the query and elements of the input sequence, and the context vector is the compiled information resulting from the weighted average of the values with respect to the attention weights. Image source~\protect\cite{attention_please}.}\label{figure:queries_keys_values}
 \end{figure}
 
-Several papers describe attention as a map from a sequence of keys to a sequence of context vectors, with exposure to queries and values as well \cite{attn_all_you_need,attention_please}. This model of attention makes no assumption about the type of input to the queries, keys, or values. The keys and queries are combined to create the attention vector, which is applied to the values to produce the context vector, the output of the attention mechanism. The keys and values can be seen as different representations of the same input \cite{attention_please}, while the queries correspond to the current position of interest. See Figure~\ref{figure:queries_keys_values} for more details on this model of attention.
+Several papers describe attention as a map from a sequence of keys to a sequence of context vectors, with exposure to queries and values \cite{attn_all_you_need,attention_please}. This model of attention makes no assumption about the type of input to the queries, keys, or values. The keys and values can be seen as different representations of the same input \cite{attention_please}, while the queries correspond to the current position of interest. See Figure~\ref{figure:queries_keys_values} for more details on this model of attention. The greatest difference between this model and the original from Bahdanau \etal~[\citeyear{joint_align_translate}] is the distinction between keys and values; Bahdanau \etal's model uses the same representation $h$ for both.
 
-This model of attention generalizes the mechanism to include nearly all forms of attention found in literature. The greatest difference between this model and the original one from Bahdanau \etal~[\citeyear{joint_align_translate}] is the distinction between keys and values. Bahdanau's model uses the same representation $h$ for both keys and values. More experimentation will help us understand whether the varied manifestations of attention provide a common benefit, or if they are better considered separately.
+This unified model generalizes the mechanism to include nearly all forms of attention found in literature. It describes commonalities between all variants of the mechanism, and offers the possibility of more completely describing the functionality. More effort is needed to describe some of the biases and uncover the basic functionality of attention in greater detail.
 
 \section{Application}
 
-Here we review several recent applications of attention, hoping to observe common strengths and deficiencies. We also discuss directions that future work may take, given the strength that attention has shown in producing relationship metrics.
+Here we review several recent applications of attention, observing common strengths and deficiencies. We also discuss directions that future work may take, given the strength that attention has shown in producing relationship metrics.
+
+\subsection{Scaled dot-product attention}
+
+With the original form of attention developed by Bahdanau \etal [\citeyear{joint_align_translate}], the relationship between the $j$th input representation $h_j$ and the $i$th output representation (query) $s_i$ can be represented as
+\[
+\text{attention}(h_j,s_i)=\left<v_j,a(W_1h_j+W_2s_i)\right>\text,
+\]
+where $\left<\cdot,\cdot\right>$ is a dot product\footnote{a weighted sum}, $v_j$ is the value representation, $a$ is an activation function\footnote{An \textit{activation function} is a non-linear function typically used at the output of a neural network, so that it can learn non-linear mappings.}, and $W_1,W_2$ are trainable weight matrices \cite{massive_exploration}.
+
+Luong and Manning [\citeyear{multiplicative_attn}] introduced a modified mechanism that's faster and produces nearly the same performance. It is called \textit{multiplicative attention}, in contrast with the original \textit{additive attention} \cite{massive_exploration}. Multiplicative attention is defined as
+\[
+\text{attention}(h_j,s_i)=\left<W_1h_j,W_2s_i\right>\text,
+\]
+which ignores the value representation $v_j$. Additive attention ``slightly but consistently outperformed'' multiplicative attention in a battery of tests \cite{massive_exploration}, but the speed benefit of multiplicative attention is attractive enough that many later models used that implementation \cite{attn_all_you_need,more_multiplicative}.
+
+\subsection{Attention without weights}
+
+Vaswani \etal~[\citeyear{attn_all_you_need}] further simplified the computation of attention by removing the learned weights $W_1$ and $W_2$
 
 \subsection{Attention without recurrent layers}
+
+\cite{attn_all_you_need}
 
 \cite{attn_all_you_need}
 
