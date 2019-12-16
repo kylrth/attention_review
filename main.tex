@@ -159,7 +159,7 @@ This unified model generalizes the mechanism to include nearly all forms of atte
 
 Here we review several recent applications of attention, observing common strengths and deficiencies. We also discuss directions that future work may take, given the strength that attention has shown in producing relationship metrics.
 
-\subsection{Scaled dot-product attention}
+\subsection{Dot-product attention}
 
 With the original form of attention developed by Bahdanau \etal [\citeyear{joint_align_translate}], the relationship between the $j$th input representation $h_j$ and the $i$th output representation (query) $s_i$ can be represented as
 \[
@@ -171,15 +171,19 @@ Luong and Manning [\citeyear{multiplicative_attn}] introduced a modified mechani
 \[
 \text{attention}(h_j,s_i)=\left<W_1h_j,W_2s_i\right>\text,
 \]
-which ignores the value representation $v_j$. Additive attention ``slightly but consistently outperformed'' multiplicative attention in a battery of tests \cite{massive_exploration}, but the speed benefit of multiplicative attention is attractive enough that many later models used that implementation \cite{attn_all_you_need,more_multiplicative}.
+ignoring the value representation $v_j$. Additive attention ``slightly but consistently outperformed'' multiplicative attention in a battery of tests \cite{massive_exploration}, but the speed benefit of multiplicative attention is attractive enough that many later models used that implementation \cite{attn_all_you_need,more_multiplicative}.
 
 \subsection{Attention without weights}
 
-Vaswani \etal~[\citeyear{attn_all_you_need}] further simplified the computation of attention by removing the learned weights $W_1$ and $W_2$
+In their Transformer model, Vaswani \etal~[\citeyear{attn_all_you_need}] further simplified the computation of attention by removing the learned weights $W_1$ and $W_2$. The queries, keys, and values are packed into matrices $Q=\begin{bmatrix} q_1 \hdots q_n \end{bmatrix}$, $K=\begin{bmatrix} k_1 \hdots k_m \end{bmatrix}$, and $V=\begin{bmatrix} v_1 \hdots v_m \end{bmatrix}$, and the mechanism is then
+\[
+\text{attention}(Q,K,V)=\text{softmax}\hspace{-0.6ex}\left(\frac{QK^\top}{\sqrt{d_k}}\right)V\text,
+\]
+where $d_k$ is the dimension of the query and key vectors.
+
+Removing the weights from the mechanism means this component is not trainable at all. Surprisingly, it appears that the trainable parts of the Transformer are still able to learn from the output of the attention mechanisms, producing state-of-the-art results on machine translation in just a fraction of the training time \cite{attn_all_you_need}. This implies that the value derived from attention is not in what it learns to ``attend to'' but in the information flow it provides to the rest of the network. In addition, Britz \etal~[\citeyear{massive_exploration}] have observed that attention models achieve ``significantly larger gradient updates to decoder states throughout training'', which supports this idea.
 
 \subsection{Attention without recurrent layers}
-
-\cite{attn_all_you_need}
 
 \cite{attn_all_you_need}
 
