@@ -83,13 +83,13 @@ Another real issue is that backpropagation is unlikely to find the ``global opti
 
 These difficulties with training neural networks are the reason that so much effort is given to developing better network architectures. Certain architectures and data representations lend themselves to a smoother search space for the weights, increasing the likelihood that backpropagation reaches a better optimum.
 
-\subsection{Description of attention}
+\subsection{Attention}
 
 Attention appears to provide that smoother search space for training the network because its output can explicitly depend on each input given to the network, while also giving an intuitive view of the inputs that the network learns to ``attend'' to.
 
-Bahdanau \etal~[\citeyear{joint_align_translate}] first described attention as an ``alignment model'' for words in a sentence to be translated. They used an RNN\footnote{i.e. a recurrent neural network, wherein the model is applied to each element of a sequence and also receives an encoding vector from the previous element.} encoder-decoder model as others had before \cite{encoder_decoders}, but for every position in the target sentence, the alignment model produced a ``soft alignment''\footnote{In machine translation, \textit{alignment} refers to the pairing of words or phrases in the source sentence with words or phrases in the target sentence.} between the target location and every word in the source sentence. See Figure~\ref{figure:rnn_search} for more details on the model.
+Bahdanau \etal~[\citeyear{joint_align_translate}] first described attention as an ``alignment model'' for words in a sentence to be translated. They used an RNN\footnote{i.e. a recurrent neural network, wherein the model is applied to each element of a sequence and also receives an encoding vector from the previous element.} encoder-decoder model as others had before \cite{encoder_decoders}, but for every position in the target sentence, the alignment model produced a ``soft alignment''\footnote{In machine translation, \textit{alignment} refers to the pairing of words or phrases in the source sentence with words or phrases in the target sentence.} between the target location and every word in the source sentence. See Figure~\ref{figure:rnn_search} for more details on the model, and Figure~\ref{figure:alignment} for a sample alignment matrix.
 
-The key development here was the use of a soft alignment, meaning that each pair of source and target words was given an alignment score between 0 and 1. This made the alignment calculation differentiable\footnote{\textit{differentiable} means that the function has a derivative, allowing gradients to pass through with backpropagation.}, allowing the alignment to be performed by a feed-forward\footnote{\textit{Feed-forward} refers to the fact that all layers of the network produce output in the forward direction (as opposed to an RNN, for example, in which some output from a network is used as input to the same layer). An example representation can be seen in Figure~\ref{figure:backpropagation}.} neural network trained along with the rest of the model.
+The key development here was the use of a soft alignment, meaning that each pair of source and target words was given an alignment score between 0 and 1. This made the alignment calculation differentiable\footnote{\textit{differentiable} means that the function has a derivative, allowing gradients to pass through with backpropagation.}, allowing the alignment to be performed by a feed-forward\footnote{\textit{Feed-forward} refers to the fact that all layers of the network produce output in the forward direction (as opposed to an RNN, for example, in which some output from a network is used as input to the same layer). An example representation can be seen in Figure~\ref{figure:backpropagation}.} neural network trained along with the rest of the model. Thus a trainable attention mechanism was created from this concept of soft alignment.
 
 \begin{figure}
     \centering
@@ -97,17 +97,15 @@ The key development here was the use of a soft alignment, meaning that each pair
     \caption{The model used by \protect\cite{joint_align_translate}. They used a bidirectional RNN to encode each word $x_i$ into a fixed-length vector $h_i$. Then, for every position $t$ in the target sentence, the alignment model produced an alignment vector $a_t$, a measure of alignment between the target location and every word in the source sentence. $a_t$ was used to find the weighted sum $c_t=\sum_{i=1}^Ta_{ti}h_i$, which was used as the input to the decoder (a unidirectional RNN). Note that the alignment model also received the previous decoder RNN state $s_{t-1}$ as input. Image source~\protect\cite{attention_please}.}\label{figure:rnn_search}
 \end{figure}
 
+In this review, we demonstrate the current trajectory of research with attention. We discuss ways that attention can be applied to various types of input, and point out places where current theoretical formulations of attention may not describe attention's role in a satisfactory way. Attention's generality demonstrates its potential to improve machine learning models, and we feel that further experiments will reveal the true characteristics of attention and propel innovation of more powerful models.
+
 \section{Theoretical generalization}
 
-Ironically, attention mechanisms have received lots of attention since their conception in \citeyear{joint_align_translate}. Initially formulated as a word alignment mechanism for text translation \cite{joint_align_translate}, attention can be generalized in two ways: first in terms of the objects it operates on, and second in terms of the information it provides.
-
-% \cite{listen_attend_spell}
-
-% Unsure: \cite{show_observe_tell}, \cite{draw}
+Ironically, attention mechanisms have received lots of attention since their conception in \citeyear{joint_align_translate}. Initially formulated as a word alignment mechanism for text translation \cite{joint_align_translate}, attention can be generalized both in terms of the objects it operates on, and in terms of the information it provides. We first discuss the types of input attention can operate on.
 
 \subsection{Objects of attention}
 
-There is a wide range of relationships that attention mechanisms can model. Specifically, we will see that attention has been generalized to include relationships between two input sequences, relationships within a single sequence, and relationships between arbitrary graphs. This generalization leads us to view attention beyond the scope of what the word ``attention'' implies.
+There is a wide range of relationships that attention mechanisms can model. Specifically, we have seen that attention can generalize to include relationships between two input sequences, relationships within a single sequence, and relationships between arbitrary graphs. This generalization leads us to view attention beyond the scope of what the word ``attention'' implies.
 
 \subsubsection{Inter-sequence attention}
 
@@ -129,7 +127,7 @@ Attention can also be used on more complex structures than sequences. Kim \etal~
 
 This use of attention is relevant because it blurs the line between data and relationships. In the case of Kim \etal~[\citeyear{graphs}], some known relationships were provided to the model in the form of parse tree structures. When the model was provided with this structure, the model learned to attend to entire subtrees as well as individual words. Thus the structure introduced in the data served as a way for the model to recognize and learn from information in the structural bias. Thus it was shown that attention mechanisms can learn from the inherent structure of their input.
 
-More work should be given to understanding how attention learns from the structure of the objects it operates on. If attention can learn from the structure as well as the values of its input, any current application of attention could benefit from preprocessing the data to expose structural information. We've already seen this applied to natural language tasks \cite{graphs}, but structure could be extracted from images, videos, and longer-form text input like paragraphs or web pages.
+More work should be given to understanding how attention learns from the structure of the objects it operates on. If attention can learn from the structure as well as the values of its input, any current application of attention could benefit from preprocessing the data to expose structural information. We've already seen this applied to natural language tasks \cite{graphs}, but structure could be extracted from images, videos, and longer-form text input like paragraphs or web pages. It is currently not known whether attention has some theoretical limitation to the kinds of relationships it can represent, but more experiments will help determine this.
 
 \subsection{Information provided by attention}
 
@@ -153,7 +151,7 @@ This appeared to be a promising generalization of attention, but the performance
 
 Several papers describe attention as a map from a sequence of keys to a sequence of context vectors, with exposure to queries and values \cite{attn_all_you_need,attention_please}. This model of attention makes no assumption about the type of input to the queries, keys, or values. The keys and values can be seen as different representations of the same input \cite{attention_please}, while the queries correspond to the current position of interest. See Figure~\ref{figure:queries_keys_values} for more details on this model of attention. The greatest difference between this model and the original from Bahdanau \etal~[\citeyear{joint_align_translate}] is the distinction between keys and values; Bahdanau \etal's model uses the same representation $h$ for both.
 
-This unified model generalizes the mechanism to include nearly all forms of attention found in literature. It describes commonalities between all variants of the mechanism, and offers the possibility of more completely describing the functionality. More effort is needed to describe some of the biases and uncover the basic functionality of attention in greater detail.
+This unified model generalizes the mechanism to include nearly all forms of attention found in literature. It describes commonalities between all variants of the mechanism, and offers the possibility of more completely describing the functionality. For this model to be useful, more experiments should seek to describe the biases and basic functionality of attention in greater detail.
 
 \section{Application}
 
@@ -211,11 +209,21 @@ Whether the mechanism has trainable weights or not, one consistent theme of atte
     \caption{The alignment produced by two attention heads on the fifth of six layers of the Transformer model \protect\cite{attn_all_you_need}. It appears that these two heads work to resolve pronoun antecedents. (Recall that this is self-alignment, so this mechanism is drawing relationships between elements of the same sequence.)}\label{figure:multi_alignment}
 \end{figure}
 
-Given that attention mechanisms learn relationships between sequences, we wonder if a simpler mechanism could learn the relationship from many inputs to a single output. One of the drawbacks of neural networks is that they don't provide a way to create feature importance metrics. These metrics are useful for determining why a model makes the decisions it does. In many papers cited here, attention produces an alignment matrix that provides intuition about the model's reasoning. It's possible that the same matrix could be produced by a simpler attention mechanism focused on the features that contribute to a single output value.
+Given that attention mechanisms learn relationships between sequences, we wonder if a simpler mechanism could learn the relationship from many inputs to a single output. One of the drawbacks of neural networks is that they don't provide a way to create feature importance metrics. These metrics are useful for determining why a model makes the decisions it does. As we've seen, attention produces an alignment matrix that provides intuition about the model's reasoning, so it's possible that the same matrix could be produced by a simpler attention mechanism focused on the features that contribute to a single output value. In this way, attention could have application beyond sequence data.
 
 \section{Conclusion}
 
-Currently, what is known for certain is that attention is useful. What is not known is exactly what it provides to the model. Is it simply a good way to generate a context vector, or does it successfully encode all the information needed to produce the output? Is it simply a limited version of something more powerful?
+Attention is seen in a broad range of applications, with impressive results. Several works have hinted at the theoretical underpinnings of attention, but have failed to come to a single explanatory theory.
+
+Currently, what is known for certain is that attention is useful. What is not known is exactly what it provides to the model. We've demonstrated areas of uncertainty that we hope future work will shed light on, of which we list several below.
+\begin{itemize}
+    \item What is ``alignment'' in the most general sense? What kind of relationships can attention model?
+    \item What other hidden biases does attention contain, and can they be overcome by altering the implementation?
+    \item Why does attention improve gradient flow for a wide variety of neural architectures?
+    \item Can attention be used to improve model interpretability for non-sequence data?
+    \item Is attention a limited version of a more powerful mechanism?
+\end{itemize}
+Though attention has had wide success since its development, we feel that there is still much to be understood about this mechanism. We hope that this review provides useful direction for future research.
 
 \bibliographystyle{named}
 \bibliography{main}
