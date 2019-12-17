@@ -197,7 +197,21 @@ One other innovation from Vaswani \etal~[\citeyear{attn_all_you_need}] was \text
 
 \subsection{Model interpretation}
 
-Given that attention mechanisms learn relationships between sequences, we wonder if a simpler mechanism could learn the relationship from many inputs to a single output. One of the drawbacks of neural networks is that they don't provide a way to create feature importance metrics. These metrics are useful for determining why a model makes the decisions it does. In many papers cited here, attention produces a relationship matrix that provides intuition about the model's reasoning. It's possible that that same matrix could be produced by a simpler attention mechanism focused on the features that contribute to a single output value.
+Whether the mechanism has trainable weights or not, one consistent theme of attention is the interpretability it offers. Figure~\ref{figure:alignment} demonstrates the intuitive ``soft alignment'' the original attention model produces for machine translation \cite{joint_align_translate}. Even without trainable weights in the attention mechanisms themselves, the Transformer produced similarly understandable alignments, as seen in Figure~\ref{figure:multi_alignment}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=3in]{figures/alignment.png}
+    \caption{The alignment produced by the original RNNSearch model for a sample English to French translation \protect\cite{joint_align_translate}. Though most words appear in the same order between the French and English, the model successfully aligned adjective-noun pairs which appear in opposite order in the source and target languages.}\label{figure:alignment}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=3in]{figures/multi_alignment.png}
+    \caption{The alignment produced by two attention heads on the fifth of six layers of the Transformer model \protect\cite{attn_all_you_need}. It appears that these two heads work to resolve pronoun antecedents. (Recall that this is self-alignment, so this mechanism is drawing relationships between elements of the same sequence.)}\label{figure:multi_alignment}
+\end{figure}
+
+Given that attention mechanisms learn relationships between sequences, we wonder if a simpler mechanism could learn the relationship from many inputs to a single output. One of the drawbacks of neural networks is that they don't provide a way to create feature importance metrics. These metrics are useful for determining why a model makes the decisions it does. In many papers cited here, attention produces an alignment matrix that provides intuition about the model's reasoning. It's possible that the same matrix could be produced by a simpler attention mechanism focused on the features that contribute to a single output value.
 
 \section{Conclusion}
 
