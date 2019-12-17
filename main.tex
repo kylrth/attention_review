@@ -165,7 +165,7 @@ With the original form of attention developed by Bahdanau \etal [\citeyear{joint
 \[
 \text{attention}(h_j,s_i)=\left<v_j,a(W_1h_j+W_2s_i)\right>\text,
 \]
-where $\left<\cdot,\cdot\right>$ is a dot product\footnote{a weighted sum}, $v_j$ is the value representation, $a$ is an activation function\footnote{An \textit{activation function} is a non-linear function typically used at the output of a neural network, so that it can learn non-linear mappings.}, and $W_1,W_2$ are trainable weight matrices \cite{massive_exploration}.
+where $\left<\cdot,\cdot\right>$ is a dot product\footnote{i.e. a weighted sum.}, $v_j$ is the value representation, $a$ is an activation function\footnote{An \textit{activation function} is a non-linear function typically used at the output of a neural network, so that it can learn non-linear mappings.}, and $W_1,W_2$ are trainable weight matrices \cite{massive_exploration}.
 
 Luong and Manning [\citeyear{multiplicative_attn}] introduced a modified mechanism that's faster and produces nearly the same performance. It is called \textit{multiplicative attention}, in contrast with the original \textit{additive attention} \cite{massive_exploration}. Multiplicative attention is defined as
 \[
@@ -181,7 +181,9 @@ In their Transformer model, Vaswani \etal~[\citeyear{attn_all_you_need}] further
 \]
 where $d_k$ is the dimension of the query and key vectors.
 
-Removing the weights from the mechanism means this component is not trainable at all. Surprisingly, it appears that the trainable parts of the Transformer are still able to learn from the output of the attention mechanisms, producing state-of-the-art results on machine translation in just a fraction of the training time \cite{attn_all_you_need}. This implies that the value derived from attention is not in what it learns to ``attend to'' but in the information flow it provides to the rest of the network. In addition, Britz \etal~[\citeyear{massive_exploration}] have observed that attention models achieve ``significantly larger gradient updates to decoder states throughout training'', which supports this idea.
+Removing the weights from the mechanism means this component is not trainable at all. Surprisingly, it appears that the trainable parts of the Transformer are still able to learn from the output of the attention mechanisms, producing state-of-the-art results on machine translation in just a fraction of the training time \cite{attn_all_you_need}. This implies that the value derived from attention is not in what it learns to ``attend to'' but in the information flow it provides to the rest of the network. In addition, Britz \etal~[\citeyear{massive_exploration}] have observed that attention models achieve ``significantly larger gradient updates to decoder states throughout training'', which supports the idea that attention should be considered primarily a mechanism for improving gradient flow.
+
+This view of attention casts doubt upon the goal attention appeared to have in the past. If we no longer train the component to recognize relationships between inputs, how then does it contribute to the learning of the model? It's understood that attention improves gradient flow \cite{massive_exploration}, but research has yet to determine why it does so even without trainable parameters\footnote{i.e. weights.}.
 
 \subsection{Attention without recurrent layers}
 
