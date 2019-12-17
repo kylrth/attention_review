@@ -87,7 +87,7 @@ These difficulties with training neural networks are the reason that so much eff
 
 Attention appears to provide that smoother search space for training the network because its output can explicitly depend on each input given to the network, while also giving an intuitive view of the inputs that the network learns to ``attend'' to.
 
-Bahdanau \etal~[\citeyear{joint_align_translate}] first described attention as an ``alignment model'' for words in a sentence to be translated. They used an RNN encoder-decoder model as others had before \cite{encoder_decoders}, but for every position in the target sentence, the alignment model produced a ``soft alignment''\footnote{In machine translation, \textit{alignment} refers to the pairing of words or phrases in the source sentence with words or phrases in the target sentence.} between the target location and every word in the source sentence. See Figure~\ref{figure:rnn_search} for more details on the model.
+Bahdanau \etal~[\citeyear{joint_align_translate}] first described attention as an ``alignment model'' for words in a sentence to be translated. They used an RNN\footnote{i.e. a recurrent neural network, wherein the model is applied to each element of a sequence and also receives an encoding vector from the previous element.} encoder-decoder model as others had before \cite{encoder_decoders}, but for every position in the target sentence, the alignment model produced a ``soft alignment''\footnote{In machine translation, \textit{alignment} refers to the pairing of words or phrases in the source sentence with words or phrases in the target sentence.} between the target location and every word in the source sentence. See Figure~\ref{figure:rnn_search} for more details on the model.
 
 The key development here was the use of a soft alignment, meaning that each pair of source and target words was given an alignment score between 0 and 1. This made the alignment calculation differentiable\footnote{\textit{differentiable} means that the function has a derivative, allowing gradients to pass through with backpropagation.}, allowing the alignment to be performed by a feed-forward\footnote{\textit{Feed-forward} refers to the fact that all layers of the network produce output in the forward direction (as opposed to an RNN, for example, in which some output from a network is used as input to the same layer). An example representation can be seen in Figure~\ref{figure:backpropagation}.} neural network trained along with the rest of the model.
 
@@ -133,7 +133,7 @@ More work should be given to understanding how attention learns from the structu
 
 \subsection{Information provided by attention}
 
-Discovering the hidden biases\footnote{A \textit{bias} refers to the tendency of a network structure to exhibit a certain behavior, regardless of the weights the network. Understanding the biases of a network structure allows us to understand how it learns, and helps us predict strengths and weaknesses. See the last paragraph of Section~\ref{section:background} for a discussion of this aspect of neural network research.} of neural network models is an area of ongoing research in neural machine learning. Fortunately, much effort has been given to discovering the biases of attention models. Some limitations of attention have already been discovered, but others have only been hinted and and deserve further work.
+Discovering the hidden biases\footnote{A \textit{bias} refers to the tendency of a network structure to exhibit a certain behavior, regardless of the weights the network. Understanding the biases of a network structure allows us to understand how it learns, and helps us predict strengths and weaknesses. See the last paragraph of Section~\ref{section:background} for a discussion of this aspect of neural network research.} of neural network models is an area of ongoing research in neural machine learning. Fortunately, much effort has been given to discovering the biases of attention models. Some limitations of attention have already been discovered, but others have only been hinted and deserve further work.
 
 \subsubsection{Active memory}
 
@@ -157,7 +157,7 @@ This unified model generalizes the mechanism to include nearly all forms of atte
 
 \section{Application}
 
-Here we review several recent applications of attention, observing common strengths and deficiencies. We also discuss directions that future work may take, given the strength that attention has shown in producing relationship metrics.
+Here we review how several recent applications of attention called into question previous assumptions about what attention accomplishes in a neural network model. We also discuss directions that future work may take, given the strength and generality that attention has shown in these works.
 
 \subsection{Dot-product attention}
 
@@ -173,7 +173,7 @@ Luong and Manning [\citeyear{multiplicative_attn}] introduced a modified mechani
 \]
 ignoring the value representation $v_j$. Additive attention ``slightly but consistently outperformed'' multiplicative attention in a battery of tests \cite{massive_exploration}, but the speed benefit of multiplicative attention is attractive enough that many later models used that implementation \cite{attn_all_you_need,more_multiplicative}.
 
-\subsection{Attention without weights}
+\subsection{Attention without weights}\label{section:without_weights}
 
 In their Transformer model, Vaswani \etal~[\citeyear{attn_all_you_need}] further simplified the computation of attention by removing the learned weights $W_1$ and $W_2$. The queries, keys, and values are packed into matrices $Q=\begin{bmatrix} q_1 \hdots q_n \end{bmatrix}$, $K=\begin{bmatrix} k_1 \hdots k_m \end{bmatrix}$, and $V=\begin{bmatrix} v_1 \hdots v_m \end{bmatrix}$, and the mechanism is then
 \[
@@ -181,17 +181,19 @@ In their Transformer model, Vaswani \etal~[\citeyear{attn_all_you_need}] further
 \]
 where $d_k$ is the dimension of the query and key vectors.
 
-Removing the weights from the mechanism means this component is not trainable at all. Surprisingly, it appears that the trainable parts of the Transformer are still able to learn from the output of the attention mechanisms, producing state-of-the-art results on machine translation in just a fraction of the training time \cite{attn_all_you_need}. This implies that the value derived from attention is not in what it learns to ``attend to'' but in the information flow it provides to the rest of the network. In addition, Britz \etal~[\citeyear{massive_exploration}] have observed that attention models achieve ``significantly larger gradient updates to decoder states throughout training'', which supports the idea that attention should be considered primarily a mechanism for improving gradient flow.
+Removing the weights from the mechanism means this component is not trainable at all. Surprisingly, it appears that the trainable parts of the Transformer are still able to learn from the output of the attention mechanisms, producing state-of-the-art results on machine translation \cite{attn_all_you_need}. This implies that the value derived from attention is not in what it learns to ``attend to'' but in the information flow it provides to the rest of the network. In addition, Britz \etal~[\citeyear{massive_exploration}] have observed that attention models achieve ``significantly larger gradient updates to decoder states throughout training'', which supports the idea that attention should be considered primarily a mechanism for improving gradient flow.
 
 This view of attention casts doubt upon the goal attention appeared to have in the past. If we no longer train the component to recognize relationships between inputs, how then does it contribute to the learning of the model? It's understood that attention improves gradient flow \cite{massive_exploration}, but research has yet to determine why it does so even without trainable parameters\footnote{i.e. weights.}.
 
 \subsection{Attention without recurrent layers}
 
-\cite{attn_all_you_need}
+RNNs are one of the most common models to use attention, and are especially slow to train due to their sequential nature. Vaswani \etal~[\citeyear{attn_all_you_need}] were able to avoid using RNNs entirely and created an encoder-decoder scheme using only weight-free attention (see Section~\ref{section:without_weights}) and linear layers. This model significantly improved the state of the art for machine translation, and in a fraction of the training time.
+
+This means that attention does not necessarily rely on the sequential encoding characterized by RNNs. In fact, the only explicitly sequential information provided to the Transformer were the values of sinusoidal functions added to the input as ``positional encodings''. The model still had to learn the relationship between that encoding and the data itself. In the Transformer, attention mechanisms at each layer were able to provide the linear layers with access to the relationship information in a representation that they could easily learn from.
 
 \subsection{Multi-headed attention}\label{section:multi_headed}
 
-\cite{attn_all_you_need}
+One other innovation from Vaswani \etal~[\citeyear{attn_all_you_need}] was \textit{multi-headed attention} wherein parallel layers of attention functions were each given a ``different, learned linear projection''\footnote{A \textit{linear projection} is a linear function that maps high-dimensional input to a lower-dimensional space. A \textit{learned linear projection} is a linear projection with trainable weights, allowing backpropagation to iteratively improve the projection.} of the same input data. If the input data is of dimension $d$, an $n$-headed attention function with $d/n$-dimensional projections has a similar computational complexity to single-headed attention, but is able to simultaneously attend to multiple locations. This overcomes one of the inherent deficiencies of attention without decreasing speed.
 
 \subsection{Model interpretation}
 
